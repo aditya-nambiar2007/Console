@@ -10,7 +10,7 @@ const io = require('socket.io')(http, { cors: { origin: "*" } });
 
 io.on('connection', (socket) => {
     socket.on('d',m=>{
-        if(!players.includes(m)){players.push(m)}
+        if(!players.includes(m)){ players.push(m) ; console.log(players)}
     })
     socket.on('data',m=>{   socket.emit('start',players)    })
 
