@@ -1,5 +1,5 @@
 const http = require('http').createServer(function (req, res) {
-    require('fs').readFile('demofile1.html', function(err, data) {
+    require('fs').readFile('console.html', function(err, data) {
       res.writeHead(200, {'Content-Type': 'text/html'});
       res.write(data);
       return res.end();
