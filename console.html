@@ -67,7 +67,9 @@
     <script>
         let ws=io.connect(location.href)
         let id;
+        ws.emit('d',id)
 
+        
         document.querySelectorAll('button').forEach(element => {
         element.addEventListener('touchstart',e=>{
             ws.emit('message',{e:"ps",key:e.target.id,code:e.target.id.charCodeAt(0),id:id})
