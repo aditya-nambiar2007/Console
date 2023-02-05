@@ -85,7 +85,8 @@
          document.getElementById('form').style.display='none'
     
         }
-         ws={emit : function () {alert('NOT CONECTED!')}}
+        else {
+         ws={emit : function () {alert('NOT CONECTED!')}}}
 
         ws.emit('d',id)
 
