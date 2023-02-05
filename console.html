@@ -65,7 +65,7 @@
         table{height: 36vmin;}
     </style>
     <script>
-        let id=new URL(location.href).searchParams.get(id);
+        let id=new URL(location.href).searchParams.get('id');
         let ws;
         if (id != undefined) {
          ws=io.connect(location.href)
