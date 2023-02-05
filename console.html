@@ -65,8 +65,15 @@
         table{height: 36vmin;}
     </style>
     <script>
-        let ws=io.connect(location.href)
-        let id;
+        let id=new URL(location.href).searchParams.get(id);
+        let ws;
+        if (id != undefined) {
+         ws=io.connect(location.href)
+         document.getElementById('form').style.display='none'
+    
+        }
+         ws={emit : function () {alert('NOT CONECTED!')}}
+
         ws.emit('d',id)
 
         
