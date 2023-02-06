@@ -52,6 +52,8 @@
             for (let i = 0; i < players.length; i++) {
                 scores[players[i]]=0
                 document.querySelector('#game').innerHTML+=`<span class="player" id="${players[i]}"></span>`
+                document.getElementById(players[i]).style.left='0vmin'
+                document.getElementById(players[i]).style.top ='0vmin'
                 document.getElementById(players[i]).style.backgroundColor=`rgb(${Math.random()*250},${Math.random()*250},${Math.random()*250})`
             }
             function collided (id1,id2){
@@ -62,10 +64,29 @@
                         rect1.y < rect2.y + rect2.height &&
                         rect1.height + rect1.y > rect2.y
             }
-
+            function move(params) {
+                let elem=document.getElementById(params.id)
+                elem.style.left=parseFloat(elem.style.left)+params.x+'vmin'
+                elem.style.top=parseFloat(elem.style.top)+params.y+'vmin'
+            }
             controls.press_start (e=>{
-                if (/X|Y|A|B/i.test(e.key)) { if (collided('o',e.id)) { scores[e.id]++;reset_animation() } } 
-            
+                if (/X|Y|A|B/i.test(e.key)) { if (collided('o',e.id)) { scores[e.id]++ ; reset_animation() } } 
+                if (e.key=='Up'){
+                    let ids = setInterval(move, 10,{id:e.id,y:-0.1});
+                    controls.press_end(e=>{if(e.key=='Up'){clearInterval(ids)}})
+                }
+                if (e.key=='Down'){
+                    let ids = setInterval(move, 10,{id:e.id,y:0.1});
+                    controls.press_end(e=>{if(e.key=='Down'){clearInterval(ids)}})
+                }
+                if (e.key=='Left'){
+                    let ids = setInterval(move, 10,{id:e.id,x:-0.1});
+                    controls.press_end(e=>{if(e.key=='Left'){clearInterval(ids)}})
+                }
+                if (e.key=='Right'){
+                    let ids = setInterval(move, 10,{id:e.id,y:0.1});
+                    controls.press_end(e=>{if(e.key=='Right'){clearInterval(ids)}})
+                }
             
             }  )            
             }
