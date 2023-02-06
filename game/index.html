@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="game">
+        <span id="o" onanimationiteration="this.style.top=Math.random()*100+'%'"></span>
+    </div>
+    <style>
+        html,body,#game{
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            background-color: aqua;
+            overflow: hidden;
+        }
+        #o{
+            position: absolute;
+            display: block;
+            width: 5vh;
+            height: 1vh;
+            background-color: red;
+            animation: slide 5s infinite linear;
+        }
+        @keyframes slide {
+            from{left:105%}
+            to{left: -5%;}
+        }
+    </style>
+</body>
+</html>
