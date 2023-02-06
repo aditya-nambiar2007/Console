@@ -64,7 +64,7 @@
             }
 
             controls.press_start (e=>{
-                if (/X|Y|A|B/i.test(e.key)) { if (collided('o',e.id)) { scores[e.id]++ } } 
+                if (/X|Y|A|B/i.test(e.key)) { if (collided('o',e.id)) { scores[e.id]++;reset_animation() } } 
             
             
             }  )            
