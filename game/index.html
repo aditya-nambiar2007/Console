@@ -48,11 +48,30 @@
         el.offsetHeight; 
          el.style.animation = null; }
         controls.start(players=>{
+            let scores={}
             for (let i = 0; i < players.length; i++) {
+                scores[players[i]]=0
                 document.querySelector('#game').innerHTML+=`<span class="player" id="${players[i]}"></span>`
                 document.getElementById(players[i]).style.backgroundColor=`rgb(${Math.random()*250},${Math.random()*250},${Math.random()*250})`
             }
-        })
+            function collided (id1,id2){
+                let rect1=document.getElementById(id1).getBoundingClientRect()
+                let rect2=document.getElementById(id2).getBoundingClientRect()
+                return  rect1.x < rect2.x + rect2.width &&
+                        rect1.x + rect1.width > rect2.x &&
+                        rect1.y < rect2.y + rect2.height &&
+                        rect1.height + rect1.y > rect2.y
+            }
+
+            controls.press_start (e=>{
+                if (/X|Y|A|B/i.test(e.key)) { if (collided('o',e.id)) { scores[e.id]++ } } 
+            
+            
+            }  )            
+            }
+            
+        )
+
     </script>
 </body>
 </html>
