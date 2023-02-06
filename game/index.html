@@ -5,10 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="../libraries/socket.io.js"></script>
+    <script src="../libraries/lib.js"></script>
+
 </head>
 <body>
     <div id="game">
-        <span id="o" onanimationiteration="this.style.top=Math.random()*99+'%'"></span>
+        <span id="o" onanimationiteration="this.style.top=Math.random()*90+'%'"></span>
     </div>
     <style>
         html,body,#game{
@@ -27,6 +30,12 @@
             background-color: red;
             animation: slide 5s infinite linear;
         }
+        .player{
+            position: absolute;
+            display: block;
+            width: 5vh;
+            height: 5vh;
+        }
         @keyframes slide {
             from{left:105%}
             to{left: -5%;}
@@ -38,6 +47,12 @@
         el.style.animation = 'none';
         el.offsetHeight; 
          el.style.animation = null; }
+        controls.start(players=>{
+            for (let i = 0; i < players.length; i++) {
+                document.querySelector('#game').innerHTML+=`<span class="player" id="${players[i]}"></span>`
+                document.getElementById(players[i]).style.backgroundColor=`rgb(${Math.random()*250},${Math.random()*250},${Math.random()*250})`
+            }
+        })
     </script>
 </body>
 </html>
