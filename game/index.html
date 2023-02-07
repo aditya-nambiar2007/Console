@@ -11,7 +11,7 @@
 </head>
 <body>
     <div id="game">
-        <span id="o" onanimationiteration="this.style.top=Math.random()*90+'%'"></span>
+        <span id="o" onanimationiteration="this.style.top=Math.random()*90+'%'" onanimationstart="this.style.top=Math.random()*90+'%'"></span>
         <table >
             <td id="p"></td>
             <td id="s"></td>
@@ -82,7 +82,7 @@
             controls.press_start (e=>{
                 if (/X|Y|A|B/i.test(e.key)) {
                     if(e.key='A'){
-                    document.getElementById('p').innerHTML=`<b> ${e.id} : ${scores[e.id]}</b>`
+                    document.getElementById('s').innerHTML=`<b> ${e.id} : ${scores[e.id]}</b>`
                     } 
                     if (collided('o',e.id)) { 
                     scores[e.id]++ ;
