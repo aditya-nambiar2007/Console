@@ -5,18 +5,27 @@ const http = require('http').createServer(function (req, res) {
       return res.end();
     });
   });
-let players=[]
+let players={}
 const io = require('socket.io')(http, { cors: { origin: "*" } });
 
 io.on('connection', (socket) => {
+    let id;
     socket.on('d',m=>{
-        if(!players.includes(m)){ players.push(m) ; console.log(players)}
+        if(!players.hasOwnProperty(m)){players[m]=m; id=m}
     })
-    socket.on('data',m=>{   socket.emit('start',players)    })
+    socket.on('data',m=>{
+      let people=[]
+        for (const key in players) {
+          people.push(key)
+        }
+         socket.emit('start',people)    
+        })
 
     socket.on('message', (message) =>     {
+    console.log(message);
      io.emit(message.e , message );   
     });
+    socket.on('disconnection',()=>{delete players[id]})
 });
 
 http.listen(100, () => console.log(`http://${require('ip').address()}:100`) );
