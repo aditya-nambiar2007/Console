@@ -10,6 +10,9 @@
 
 </head>
 <body>
+    <table style="position: relative;height: 100%;background-color: aliceblue;" cellspacing="0">
+        <tr><td> <b>NAME</b> </td><td> <b>SCORE</b> </td></tr>
+    </table>
     <div id="game">
         <span id="o" onanimationiteration="this.style.top=Math.random()*90+'%'" onanimationstart="this.style.top=Math.random()*90+'%'"></span>
         <table >
@@ -47,7 +50,9 @@
         table{position: absolute;
             bottom: 0;
             width: 100%;}
-            td{height: 2vmin;
+            td{
+            text-align: center;  
+            height: 2vmin;
             width: 49%;
         border: 1px solid black;}
     </style>
@@ -107,7 +112,16 @@
                     controls.press_end(e=>{if(e.key=='Right'){clearInterval(ids)}})
                 }
             
-            }  )            
+            })    
+            setTimeout(() => {
+                let as=[]
+                for (const k in scores) {as.push([scores[k],k])}
+                as.sort().reverse()
+                for (let i = 0; i < as.length; i++) {
+                    document.querySelector('table').innerHTML+=`<tr><td> ${as[i][1]} </td><td> ${as[i][0]} </td></tr>`
+                    document.querySelector('table').style.display='block'
+                }
+            }, 5*60*1000);        
             }
             
         )
