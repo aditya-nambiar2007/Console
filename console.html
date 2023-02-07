@@ -31,7 +31,7 @@
                 background-color: black;
                 color: antiquewhite;
                 font-size: 5vmin;
-                display: block;" maxlength="10" required onchange="this.value=this.value.replace(/(\s|-|)/g,'_')">
+                display: block;" maxlength="10" required onchange="this.value=this.value.replace(/(\s|-|\\|\/|\*|\+|\%|\&|\||\!)+/g,'_')">
            <input type="submit" value="GO >" style="
                 background-color: navy;
                 color: orange;
