@@ -90,19 +90,19 @@
                     document.getElementById('p').innerHTML=`LAST POINT :<b> ${e.id}</b>`
                     } } 
                 if (e.key=='Up'){
-                    let ids = setInterval(move, 10,{id:e.id,y:-0.1});
+                    let ids = setInterval(move, 1,{id:e.id,y:-0.1});
                     controls.press_end(e=>{if(e.key=='Up'){clearInterval(ids)}})
                 }
                 if (e.key=='Down'){
-                    let ids = setInterval(move, 10,{id:e.id,y:0.1});
+                    let ids = setInterval(move, 1,{id:e.id,y:0.1});
                     controls.press_end(e=>{if(e.key=='Down'){clearInterval(ids)}})
                 }
                 if (e.key=='Left'){
-                    let ids = setInterval(move, 10,{id:e.id,x:-0.1});
+                    let ids = setInterval(move, 1,{id:e.id,x:-0.1});
                     controls.press_end(e=>{if(e.key=='Left'){clearInterval(ids)}})
                 }
                 if (e.key=='Right'){
-                    let ids = setInterval(move, 10,{id:e.id,y:0.1});
+                    let ids = setInterval(move, 1,{id:e.id,x:0.1});
                     controls.press_end(e=>{if(e.key=='Right'){clearInterval(ids)}})
                 }
             
