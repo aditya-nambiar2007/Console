@@ -85,7 +85,7 @@
     <script>
         let id=new URL(location.href).searchParams.get('id');
         let ws;
-        if (id != undefined) {
+        if (!id) {
          ws=io.connect(location.href)
          document.getElementById('form').style.display='none'
     
