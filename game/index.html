@@ -87,6 +87,7 @@
                     if (collided('o',e.id)) { 
                     scores[e.id]++ ;
                     reset_animation() ;
+                    document.getElementById('p').innerHTML=``
                     document.getElementById('p').innerHTML=`LAST POINT :<b> ${e.id}</b>`
                     } } 
                 if (e.key=='Up'){
