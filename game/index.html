@@ -12,6 +12,10 @@
 <body>
     <div id="game">
         <span id="o" onanimationiteration="this.style.top=Math.random()*90+'%'"></span>
+        <table >
+            <td id="p"></td>
+            <td id="s"></td>
+        </table>
     </div>
     <style>
         html,body,#game{
@@ -40,6 +44,12 @@
             from{left:105%}
             to{left: -5%;}
         }
+        table{position: absolute;
+            bottom: 0;
+            width: 100%;}
+            td{height: 2vmin;
+            width: 49%;
+        border: 1px solid black;}
     </style>
     <script>
         function reset_animation() {
@@ -70,7 +80,15 @@
                 elem.style.top=parseFloat(elem.style.top)+params.y+'vmin'
             }
             controls.press_start (e=>{
-                if (/X|Y|A|B/i.test(e.key)) { if (collided('o',e.id)) { scores[e.id]++ ; reset_animation() } } 
+                if (/X|Y|A|B/i.test(e.key)) {
+                    if(e.key='A'){
+                    document.getElementById('p').innerHTML=`<b> ${e.id} : ${scores[e.id]}</b>`
+                    } 
+                    if (collided('o',e.id)) { 
+                    scores[e.id]++ ;
+                    reset_animation() ;
+                    document.getElementById('p').innerHTML=`LAST POINT :<b> ${e.id}</b>`
+                    } } 
                 if (e.key=='Up'){
                     let ids = setInterval(move, 10,{id:e.id,y:-0.1});
                     controls.press_end(e=>{if(e.key=='Up'){clearInterval(ids)}})
