@@ -14,6 +14,7 @@
         <tr><td> <b>NAME</b> </td><td> <b>SCORE</b> </td></tr>
     </table>
     <div id="game">
+        <span id="timer">180</span>
         <span id="o" onanimationiteration="this.style.top=Math.random()*90+'%'" onanimationstart="this.style.top=Math.random()*90+'%'"></span>
         <table >
             <td id="p"></td>
@@ -40,10 +41,21 @@
         .player{
             position: absolute;
             display: block;
-            width: 5vh;
-            height: 5vh;
+            width: 5vmin;
+            height: 5vmin;
             border: 1px solid black;
-       }
+        }
+        .player::before{
+            display: block;
+            position: absolute;
+            content: attr(id);
+            font-size: 2vmin;
+            height: 2vmin;
+            width: 20vmin;
+            left: -7.5vmin;
+            text-align: center;
+            bottom: 110%;
+        }
         @keyframes slide {
             from{left:105%}
             to{left: -5%;}
@@ -56,6 +68,11 @@
             height: 2vmin;
             width: 49%;
         border: 1px solid black;}
+        span#timer{
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 3vmin;        }
     </style>
     <script>
         function reset_animation() {
@@ -97,25 +114,28 @@
                     document.getElementById('p').innerHTML=`LAST POINT :<b> ${e.id}</b>`
                     } } 
                 if (e.key=='Up'){
-                    let ids = setInterval(move, 1,{id:e.id,y:-0.1});
+                    let ids = setInterval(move, 1,{id:e.id,y:-0.2});
                     controls.press_end(e=>{if(e.key=='Up'){clearInterval(ids)}})
                 }
                 if (e.key=='Down'){
-                    let ids = setInterval(move, 1,{id:e.id,y:0.1});
+                    let ids = setInterval(move, 1,{id:e.id,y:0.2});
                     controls.press_end(e=>{if(e.key=='Down'){clearInterval(ids)}})
                 }
                 if (e.key=='Left'){
-                    let ids = setInterval(move, 1,{id:e.id,x:-0.1});
+                    let ids = setInterval(move, 1,{id:e.id,x:-0.2});
                     controls.press_end(e=>{if(e.key=='Left'){clearInterval(ids)}})
                 }
                 if (e.key=='Right'){
-                    let ids = setInterval(move, 1,{id:e.id,x:0.1});
+                    let ids = setInterval(move, 1,{id:e.id,x:0.2});
                     controls.press_end(e=>{if(e.key=='Right'){clearInterval(ids)}})
                 }
             
-            })    
+            }) 
+            setInterval(() => {
+                document.getElementById('timer').innerText = parseInt(document.getElementById('timer').innerText)-1
+            }, 1000);   
             setTimeout(() => {
-                let as=Object.keys(scores).sort((a,b)=>{return list[a]-list[b] })
+                let as=Object.keys(scores).sort((a,b)=>{return scores[b]-scores[a] })
                 for (let i = 0; i < as.length; i++) {
                     document.querySelector('table').innerHTML+=`<tr><td> ${as[i]} </td><td> ${scores[as[i]]} </td></tr>`
                     document.querySelector('table').style.display='block'
