@@ -114,11 +114,9 @@
             
             })    
             setTimeout(() => {
-                let as=[]
-                for (const k in scores) {as.push([scores[k],k])}
-                as.sort().reverse()
+                let as=Object.keys(scores).sort((a,b)=>{return list[a]-list[b] })
                 for (let i = 0; i < as.length; i++) {
-                    document.querySelector('table').innerHTML+=`<tr><td> ${as[i][1]} </td><td> ${as[i][0]} </td></tr>`
+                    document.querySelector('table').innerHTML+=`<tr><td> ${as[i]} </td><td> ${scores[as[i]]} </td></tr>`
                     document.querySelector('table').style.display='block'
                 }
             }, 5*60*1000);        
