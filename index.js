@@ -25,7 +25,7 @@ io.on('connection', (socket) => {
     console.log(message);
      io.emit(message.e , message );   
     });
-    socket.on('disconnection',()=>{delete players[id]})
+    socket.on('disconnect',()=>{delete players[id]})
 });
 
 http.listen(100, () => console.log(`http://${require('ip').address()}:100`) );
