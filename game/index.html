@@ -11,7 +11,9 @@
 </head>
 <body>
     <table style="position: relative;height: 100%;background-color: aliceblue; display: none;" cellspacing="0">
+        <tbody>
         <tr><td> <b>NAME</b> </td><td> <b>SCORE</b> </td></tr>
+        </tbody>
     </table>
     <div id="game">
         <span id="timer">180</span>
@@ -137,7 +139,7 @@
             setTimeout(() => {
                 let as=Object.keys(scores).sort((a,b)=>{return scores[b]-scores[a] })
                 for (let i = 0; i < as.length; i++) {
-                    document.querySelector('table').innerHTML+=`<tr><td> ${as[i]} </td><td> ${scores[as[i]]} </td></tr>`
+                    document.querySelector('table>tbody').innerHTML+=`<tr><td> ${as[i]} </td><td> ${scores[as[i]]} </td></tr>`
                     document.querySelector('table').style.display='block'
                 }
             }, 3*60*1000);        
