@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width ,  initial-scale=1.0">
+    <title>Documentation of console</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js" integrity="sha512-bgHRAiTjGrzHzLyKOnpFvaEpGzJet3z4tZnXGjpsCcqOnAH6VGUx9frc5bcIhKTVLEiCO6vEhNAgx5jtLUYrfA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script></head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/a11y-dark.min.css" integrity="sha512-Vj6gPCk8EZlqnoveEyuGyYaWZ1+jyjMPg8g4shwyyNlRQl6d3L9At02ZHQr5K6s5duZl/+YKMnM3/8pDhoUphg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <body>
+    <div id="getting_started">
+        <h3>Getting Started</h3>
+        Include the libraries in the document <span style="color: blue;">head</span>
+        <pre>
+            <code>
+            &lt;head&gt; <br>
+                &lt;title&gt;Your Title&lt;/title&gt; <br>
+                <span style="color: green;">&lt;!-- First socket.io.js , then lib.js in the libraries folder--&gt; <br></span>
+                &lt;script src="../libraries/socket.io.js"&gt;&lt;/script&gt; <br>
+                &lt;script src="../libraries/lib.js"&gt;&lt;/script&gt; <br>
+            &lt;/head&gt; <br>
+            </code>
+        </pre>
+        <h3>Start</h3>
+        Use <span style="color: blue;">controls.start</span> function
+        <pre>
+            <code>
+            controls.start(
+                ()=>{ start_the_game() }
+            )
+            </code>
+        </pre>
+        Suppose foo and bar are using controls
+        <pre>
+            <code>
+            controls.start(
+                players=>{ console.log(players); // logs ["foo" , "bar"] }
+            )
+            </code>
+        </pre>
+
+        <h3 >Press_Start Event</h3>
+        This event is fired when a key is pressed
+        <pre>
+            <code>
+            controls.press_start(
+                ()=>{ function() }
+            )
+            </code>
+        </pre>
+        Suppose a key is pressed by user <b style="color: orange;">foo</b>
+        <pre>
+            <code >
+            controls.press_start(
+                (event)=>{ 
+                    console.log(event)
+                    // logs either on the basis of the buton pressed:
+                    {e:"ps" , key:"Up" , code:85 , id:"foo"}
+                    {e:"ps" , key:"Left" , code:76 , id:"foo"}
+                    {e:"ps" , key:"Right" , code:82 , id:"foo"}
+                    {e:"ps" , key:"Down" , code:68 , id:"foo"}
+                    {e:"ps" , key:"Y" , code:89 , id:"foo"}
+                    {e:"ps" , key:"X" , code:88 , id:"foo"}
+                    {e:"ps" , key:"A" , code:65 , id:"foo"}
+                    {e:"ps" , key:"B" , code:66 , id:"foo"}
+                 }
+            )
+            </code>
+        </pre>        
+        <h3 >Press_End Event</h3>
+        This event is fired when a key is released
+        <pre>
+            <code>
+            controls.press_end(
+                ()=>{ function() }
+            )
+            </code>
+        </pre>
+        Suppose a key is released by user <b style="color: orange;">foo</b>
+        <pre>
+            <code >
+            controls.press_end(
+                (event)=>{ 
+                    console.log(event)
+                    // logs either on the basis of the buton pressed:
+                    {e:"pe" , key:"Up" , code:85 , id:"foo"}
+                    {e:"pe" , key:"Left" , code:76 , id:"foo"}
+                    {e:"pe" , key:"Right" , code:82 , id:"foo"}
+                    {e:"pe" , key:"Down" , code:68 , id:"foo"}
+                    {e:"pe" , key:"Y" , code:89 , id:"foo"}
+                    {e:"pe" , key:"X" , code:88 , id:"foo"}
+                    {e:"pe" , key:"A" , code:65 , id:"foo"}
+                    {e:"pe" , key:"B" , code:66 , id:"foo"}
+                 }
+            )
+            </code>
+        </pre>
+    </div>
+    <style>
+        code{display: block;
+            color: gray;
+            background-color: #343434;}
+            *{font-size: 1vh}
+    </style>
+    <script>
+        document.body.onload=hljs.highlightAll
+    </script>
+</body>
+</html>
