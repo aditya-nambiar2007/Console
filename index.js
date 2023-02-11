@@ -28,4 +28,13 @@ io.on('connection', (socket) => {
     socket.on('disconnect',()=>{delete players[id]})
 });
 
-http.listen(100, () => console.log(`http://${require('ip').address()}:100`) );
+let ip=[]
+let os=require('os').networkInterfaces()
+for (const k in os) {
+os[k].forEach(e=>{
+  if(e.family=='IPv4'){
+    ip.push(e.address)}
+})
+
+}
+http.listen(100, () => console.log(`CONNECT TO: http://${ip[0]}:100`) );
