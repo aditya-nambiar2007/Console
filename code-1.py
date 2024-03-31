@@ -17,8 +17,11 @@ def key_set(key):
 	f=file.open("controls.json","r")
 	data=json.loads(f.read())
 	f.close()
-	return data[key][:1]
-
+	try:
+		a = eval("Key."+data[key])
+	except :
+		a = data[key][:1]
+        return a
 
 @server.on("message")
 def event(sid,data):
