@@ -4,7 +4,7 @@
 		"Right":"d",
 		"Down":"s",		
 		"X"   :"a",
-		"A"   :Key.space,
+		"A"   :"space",
 		"B"   :"d",
-		"Y"   :Key.space
+		"Y"   :"space"
 }
