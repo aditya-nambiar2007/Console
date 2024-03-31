@@ -4,7 +4,7 @@ import eventlet,json,file
 from socket import gethostbyname as ip
 
 k=Controller()
-f=file.open("controls.json","r")
+
 def press(key):
 	k.press(key)
 def release(key):
@@ -13,7 +13,13 @@ def release(key):
 server=	Server()
 app=WSGIApp(server,static_files={'/':'console.html'})
 
-key_set= 
+def key_set(key):
+	f=file.open("controls.json","r")
+	data=json.loads(f.read())
+	f.close()
+	return data[key][:1]
+
+
 @server.on("message")
 def event(sid,data):
 	if data['e']=="ps":
