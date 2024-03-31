@@ -31,5 +31,5 @@ def event(sid,data):
 		release( key_set[ data['key'] ] )
 pass
 
-print('\n Connect To: http://{ip(hostname)}:8000 ')
+print('\n Connect To: http://{}:8000 '.format( ip(hostname) ))
 eventlet.wsgi.server(eventlet.listen(("0.0.0.0", 8000)), app)
