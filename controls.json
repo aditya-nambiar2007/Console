@@ -1,0 +1,10 @@
+{
+		"Up"  :"w",
+		"Left":"a",
+		"Right":"d",
+		"Down":"s",		
+		"X"   :"a",
+		"A"   :Key.space,
+		"B"   :"d",
+		"Y"   :Key.space
+}
