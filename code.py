@@ -1,7 +1,7 @@
 from pynput.keyboard import Key,Controller
 from socketio  import Server,WSGIApp 
 import eventlet,json
-from socket import gethostbyname as ip
+from socket import gethostbyname, gethostname
 
 k=Controller()
 
@@ -31,5 +31,5 @@ def event(sid,data):
 		release( key_set( data['key'] ) )
 pass
 
-print('\n Connect To: http://:8000 ')
+print('\nConnect To: http://{}:8000\n '.format( gethostbyname(gethostname())))
 eventlet.wsgi.server(eventlet.listen(("0.0.0.0", 8000)), app)
