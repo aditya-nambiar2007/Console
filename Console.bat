@@ -1,4 +1,4 @@
 @ECHO off 
-Title NambiPlay
+Title CONSOLE_XYAB
 py code.py
 PAUSE
