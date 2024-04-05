@@ -1,17 +1,7 @@
+import socket,http.server,json
 from pynput.keyboard import Key,Controller
-from socketio  import Server,WSGIApp 
-import eventlet,json
-from socket import gethostbyname, gethostname
 
 k=Controller()
-
-def press(key):
-	k.press(key)
-def release(key):
-	k.release(key)
-	
-server=	Server()
-app=WSGIApp(server,static_files={'/':'console.html'})
 
 def key_set(key):
 	f=open("controls.json","r")
@@ -23,13 +13,28 @@ def key_set(key):
 		return data[key][:1]
     
 
-@server.on("message")
-def event(sid,data):
-	if data['e']=="ps":
-		press( key_set( data['key'] ) )
-	if data['e']=="pe":
-		release( key_set( data['key'] ) )
-pass
 
-print('\nConnect To: http://{}:8000\n '.format( gethostbyname(gethostname())))
-eventlet.wsgi.server(eventlet.listen(("0.0.0.0", 8000)), app)
+def event(data):
+	if data['e']=="ps":
+		k.press( key_set( data['key'] ) )
+	if data['e']=="pe":
+		k.release( key_set( data['key'] ) )
+
+print('\nConnect To: http://{}:8000\n '.format( socket.gethostbyname(socket.gethostname())))
+
+class HTTP(http.server.BaseHTTPRequestHandler):
+	def do_GET(s):
+		s.send_response(200)
+		s.end_headers()
+		s.wfile.write( bytes(open("console.html").read() , 'UTF-8') )
+	def do_POST(s):      
+			content_length = int(s.headers['Content-Length'])
+			post_data = s.rfile.read(content_length).decode("UTF-8")
+			print(post_data)
+			s.send_response(200)
+			s.send_header('Content-type','text/html')
+			s.end_headers()
+			event(json.loads(post_data))
+			s.wfile.write(b'done')
+
+http.server.HTTPServer( ('0.0.0.0',8000),HTTP).serve_forever()
