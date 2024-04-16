@@ -13,8 +13,6 @@ def key_set(key):
 		return eval("Key."+data[key])
 	except :
 		return data[key][:1]
-    
-
 
 def event(data):
 	if data['e']=="ps":
@@ -52,6 +50,7 @@ inp={}
 i=60
 for btn in file:
 	ttk.Label(win,text = btn+" :",  font = ("Times New Roman", 10)).grid(column = 0,  row = 15+i, padx = 10, pady = 25) 
+	
 	inp[btn] = ttk.Combobox(win, width = 10,  textvariable = tk.StringVar()) 
 	inp[btn]['values'] = ('w','a','s','d','space','x') 
 	inp[btn].current(inp[btn]['values'].index(file[btn]))
