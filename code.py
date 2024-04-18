@@ -13,6 +13,8 @@ def key_set(key):
 		return eval("Key."+data[key])
 	except :
 		return data[key][:1]
+    
+
 
 def event(data):
 	if data['e']=="ps":
@@ -49,8 +51,9 @@ ttk.Label(win,text = "Key To Be Simulated",  font = ("Times New Roman", 10)).gri
 inp={}
 i=60
 for btn in file:
-	ttk.Label(win,text = btn+" :",  font = ("Times New Roman", 10)).grid(column = 0,  row = 15+i, padx = 10, pady = 25) 
 	
+	ttk.Label(win,text = btn+" :",  font = ("Times New Roman", 10)).grid(column = 0,  row = 15+i, padx = 10, pady = 25) 
+
 	inp[btn] = ttk.Combobox(win, width = 10,  textvariable = tk.StringVar()) 
 	inp[btn]['values'] = ('w','a','s','d','space','x') 
 	inp[btn].current(inp[btn]['values'].index(file[btn]))
@@ -60,11 +63,11 @@ for btn in file:
 def data_keys():
 	json_data={}
 	for data in inp:
-		json_data[data]=data.get(1)
+		json_data[data]=data.get()
 	open('controls.json','w').write(json.dumps(json_data))
 
 btn1 = ttk.Button(win, text = 'SAVE',  command = data_keys) 
 
-threading.Thread(target=http.server.HTTPServer( ('0.0.0.0',8000),HTTP).serve_forever).start()
+threading.Thread(target=win.mainloop).start()
 
-win.mainloop()
+http.server.HTTPServer( ('0.0.0.0',8000),HTTP).serve_forever()
