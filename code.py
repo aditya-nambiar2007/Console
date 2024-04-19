@@ -43,6 +43,7 @@ class HTTP(http.server.BaseHTTPRequestHandler):
 
 win=tk.Tk()
 win.title('Console')
+win.iconbitmap("icon.ico")
 
 ttk.Label(win,text = httptxt,  font = ("Verdana", 15,"bold")).grid(column = 1,  row = 30, padx = 10, pady = 5)
 
