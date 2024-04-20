@@ -1,4 +1,4 @@
-import socket,http.server,json,time,multiprocessing
+import socket,http.server,json,time,threading
 import tkinter as tk
 from tkinter import ttk
 from pynput.keyboard import Key,Controller
@@ -70,12 +70,7 @@ def data_keys():
 	open('controls.json','w').write(json.dumps(json_data))
 
 btn1 = ttk.Button(win, text = 'SAVE',  command = data_keys).grid(column=1,row=30+i)
-proc =multiprocessing.Process(target=http.server.HTTPServer( ('0.0.0.0',8000),HTTP).serve_forever).start()
+proc =threading.Thread(target=http.server.HTTPServer( ('0.0.0.0',8000),HTTP).serve_forever).start
 
-def closing():
-    if messagebox.askokcancel("Quit", "Do you want to quit?"):
-        win.destroy()
-        proc.terminate()
-
-win.protocol("WM_DELETE_WINDOW",closing)
+win.after(1000,proc)
 win.mainloop()
