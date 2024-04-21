@@ -72,6 +72,4 @@ def data_keys():
 	open('controls.json','w').write(json.dumps(json_data))
 
 btn1 = ttk.Button(win, text = 'SAVE',  command = data_keys).grid(column=1,row=30+i)
-threading.Thread(target=http.server.HTTPServer( ('0.0.0.0',8000),HTTP).serve_forever).start()
-
 win.mainloop()
