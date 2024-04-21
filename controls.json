@@ -1,15 +1,1 @@
-{
-		"Up"  :"w",
-		"Left":"a",
-		"Right":"d",
-		"Down":"s",		
-		"X"   :"a",
-		"A"   :"space",
-		"B"   :"d",
-		"Y"   :"space",
-	
-	        "b1"  :"x",
-	        "b2"  :"x",
-	        "b3"  :"x",
-	        "b4"  :"x"
-}
+{"Up": "r", "Left": "a", "Right": "d", "Down": "s", "X": "a", "A": "space", "B": "d", "Y": "space", "b1": "x", "b2": "x", "b3": "x", "b4": "x"}

@@ -18,7 +18,7 @@ def key_set(key):
 		return eval("Key."+data[key])
 	except :
 		return data[key][:1]
-		
+
 def event(data):
 	if data['e']=="ps":
 		k.press( key_set( data['key'] ) )
@@ -41,6 +41,8 @@ class HTTP(http.server.BaseHTTPRequestHandler):
 			event(json.loads(post_data))
 			s.wfile.write(b'done')
 
+threading.Thread(target=http.server.HTTPServer( ('0.0.0.0',8000),HTTP).serve_forever).start()	
+print('\nPlease Close The Server Window After Console Is Used\n')
 win=tk.Tk()
 win.title('Console')
 win.iconbitmap("icon.ico")
@@ -70,7 +72,6 @@ def data_keys():
 	open('controls.json','w').write(json.dumps(json_data))
 
 btn1 = ttk.Button(win, text = 'SAVE',  command = data_keys).grid(column=1,row=30+i)
-proc =threading.Thread(target=http.server.HTTPServer( ('0.0.0.0',8000),HTTP).serve_forever).start
+threading.Thread(target=http.server.HTTPServer( ('0.0.0.0',8000),HTTP).serve_forever).start()
 
-win.after(1000,proc)
 win.mainloop()
