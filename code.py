@@ -41,7 +41,8 @@ class HTTP(http.server.BaseHTTPRequestHandler):
 			event(json.loads(post_data))
 			s.wfile.write(b'done')
 
-threading.Thread(target=http.server.HTTPServer( ('0.0.0.0',8000),HTTP).serve_forever).start()	
+http_server=http.server.HTTPServer( ('0.0.0.0',8000),HTTP)
+threading.Thread(target=http_server.serve_forever).start()	
 print('\nPlease Close The Server Window After Console Is Used\n')
 win=tk.Tk()
 win.title('Console')
@@ -71,5 +72,10 @@ def data_keys():
 		json_data[data]=inp[data].get()
 	open('controls.json','w').write(json.dumps(json_data))
 
+def close():
+	http_server.shutdown()
+	win.destroy()
+
 btn1 = ttk.Button(win, text = 'SAVE',  command = data_keys).grid(column=1,row=30+i)
+win.protocol("WM_DELETE_WINDOW",close)
 win.mainloop()
