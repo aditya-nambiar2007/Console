@@ -1,11 +1,11 @@
-import socket,http.server,json,time,multiprocessing,requests,os.path
+import socket,http.server,json,time,threading,urllib.request ,os.path
 import tkinter as tk
 from tkinter import ttk
 from pynput.keyboard import Key,Controller
 
 for file in ['console.html','icon.ico','controls.json']:
-	if !os.path.isfile(file):
-		open(file,'w').write(	requests.get('https://raw.githubusercontent.com/aditya-nambiar2007/Console/main/'+file).text	)
+	if not os.path.isfile(file):
+		urllib.request.urlretrieve('https://raw.githubusercontent.com/aditya-nambiar2007/Console/main/'+file, file	)
 
 k=Controller()
 keys=("alt","alt_gr","alt_l","alt_r","backspace","caps_lock","cmd","cmd_l","cmd_r","ctrl","ctrl_l","ctrl_r","delete","down","end","enter","esc","f1","f2","f3","f4","f5","f6","f7","f8","f9","f10","f11","f12","home","insert","left","media_next","media_play_pause","media_previous","media_volume_down","media_volume_mute","media_volume_up","menu","num_lock","page_down","page_up","pause","print_screen","right","scroll_lock","shift","shift_l","shift_r","space","tab","up",'a', 'b','c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's','t', 'u', 'v', 'w', 'x', 'y', 'z','1','2','3','4','5','6','7','8','9','0','!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+', '-', '.', '~', '|', '<', '>', '=', '-', '_', '/', ':', ';', '?', '[', ']', '{', '}', '~') 
@@ -22,7 +22,7 @@ def key_set(key):
 		return eval("Key."+data[key])
 	except :
 		return data[key][:1]
-		
+
 def event(data):
 	if data['e']=="ps":
 		k.press( key_set( data['key'] ) )
@@ -45,9 +45,12 @@ class HTTP(http.server.BaseHTTPRequestHandler):
 			event(json.loads(post_data))
 			s.wfile.write(b'done')
 
+http_server=http.server.HTTPServer( ('0.0.0.0',8000),HTTP)
+threading.Thread(target=http_server.serve_forever).start()	
+print('\nPlease Close The Server Window After Console Is Used\n')
 win=tk.Tk()
 win.title('Console')
-win.iconbitmap('icon.ico')
+win.iconbitmap("icon.ico")
 
 ttk.Label(win,text = httptxt,  font = ("Verdana", 15,"bold")).grid(column = 1,  row = 30, padx = 10, pady = 5)
 
@@ -73,13 +76,10 @@ def data_keys():
 		json_data[data]=inp[data].get()
 	open('controls.json','w').write(json.dumps(json_data))
 
+def close():
+	http_server.shutdown()
+	win.destroy()
+
 btn1 = ttk.Button(win, text = 'SAVE',  command = data_keys).grid(column=1,row=30+i)
-proc =multiprocessing.Process(target=http.server.HTTPServer( ('0.0.0.0',8000),HTTP).serve_forever).start()
-
-def closing():
-    if messagebox.askokcancel("Quit", "Do you want to quit?"):
-        win.destroy()
-        proc.terminate()
-
-win.protocol("WM_DELETE_WINDOW",closing)
+win.protocol("WM_DELETE_WINDOW",close)
 win.mainloop()
