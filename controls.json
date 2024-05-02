@@ -5,7 +5,7 @@
  "b1": "x",
  "b2": "x",
  "b3": "x",
- "X": "a",
- "A": "space",
- "B": "d",
- "Y": "space"}
+ "X": "space",
+ "A": "up",
+ "B": "ctrl",
+ "Y": "down"}
