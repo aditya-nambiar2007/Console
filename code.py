@@ -1,9 +1,11 @@
-import socket,http.server,json,time,threading,urllib.request ,os.path
+import socket,json,threading,urllib.request ,os.path
+from socketio import WSGIApp,Server
+import eventlet
 import tkinter as tk
 from tkinter import ttk
-from pynput.keyboard import Key,Controller
+from pynput.keyboard import Controller
 
-for file in ['console.html','icon.ico','controls.json']:
+for file in ['console.html','socket.io.min.js','icon.ico','controls.json']:
 	if not os.path.isfile(file):
 		urllib.request.urlretrieve('https://raw.githubusercontent.com/aditya-nambiar2007/Console/main/'+file, file	)
 
@@ -14,40 +16,37 @@ def list_filter(e):
 	value=e.widget.get()
 	e.widget['values']=tuple( filter( lambda x:	x.startswith(value) ,keys) )
 
-def key_set(key):
-	f=open("controls.json","r")
-	data=json.loads(f.read())
-	f.close()
-	try:
-		return eval("Key."+data[key])
-	except :
-		return data[key][:1]
+f=open("controls.json","r")
+data_keyvals=json.loads(f.read())
+f.close()
 
-def event(data):
+
+def key_set(key):
+	try:
+		return eval("Key."+data_keyvals[key])
+	except :
+		return data_keyvals[key][:1]
+
+
+httptxt='Connect To: http://{}:8000'.format( socket.gethostbyname(socket.gethostname()))
+
+server=Server()
+app=WSGIApp(server,static_files={'/':'console.html','/socket.io.min.js':'socket.io.min.js'})
+@server.on("event")
+def event(sid,data):
+	data=json.loads(data)
 	if data['e']=="ps":
 		k.press( key_set( data['key'] ) )
 	if data['e']=="pe":
 		k.release( key_set( data['key'] ) )
 
-httptxt='Connect To: http://{}:8000'.format( socket.gethostbyname(socket.gethostname()))
-
-class HTTP(http.server.BaseHTTPRequestHandler):
-	def do_GET(s):
-		s.send_response(200)
-		s.end_headers()
-		s.wfile.write( bytes(open("console.html").read() , 'UTF-8') )
-	def do_POST(s):      
-			content_length = int(s.headers['Content-Length'])
-			post_data = s.rfile.read(content_length).decode("UTF-8")
-			s.send_response(200)
-			s.send_header('Content-type','text/html')
-			s.end_headers()
-			event(json.loads(post_data))
-			s.wfile.write(b'done')
-
-http_server=http.server.HTTPServer( ('0.0.0.0',8000),HTTP)
-threading.Thread(target=http_server.serve_forever).start()	
+def serve():
+    global http_server
+    http_server = eventlet.listen(("0.0.0.0", 8000))
+    eventlet.wsgi.server(http_server, app)
+threading.Thread(target=serve, daemon=True).start()	
 print('\nPlease Close The Server Window After Console Is Used\n')
+
 win=tk.Tk()
 win.title('Console')
 win.iconbitmap("icon.ico")
@@ -71,13 +70,15 @@ for btn in file:
 	i+=15
 	
 def data_keys():
+	global data_keyvals
 	json_data={}
 	for data in inp:
 		json_data[data]=inp[data].get()
 	open('controls.json','w').write(json.dumps(json_data))
+	data_keyvals=json_data
 
 def close():
-	http_server.shutdown()
+	eventlet.greenthread.spawn(eventlet.wsgi.server,http_server,app)
 	win.destroy()
 
 btn1 = ttk.Button(win, text = 'SAVE',  command = data_keys).grid(column=1,row=30+i)
